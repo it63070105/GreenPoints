@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Processing</title>
+</head>
+<body>
+    <h1>Your result here</h1>
+    <form action="{{ url_for('post_images') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="images" accept="image/*" multiple>
+        <button type="submit">Process Images</button>
+    </form>
+
+    <ul>
+        {% for item in result %}
+            <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img">
+            <li>{{ item.image_name }} {{item.label}}</li>
+        {% endfor %}
+        </ul>
+</body>
+</html>
