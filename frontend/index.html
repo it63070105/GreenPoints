@@ -1,20 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Processing</title>
-</head>
-<body>
-    <h1>Your result here</h1>
-    <form action="{{ url_for('post_images') }}" method="POST" enctype="multipart/form-data">
-        <input type="file" name="images" accept="image/*" multiple>
-        <button type="submit">Process Images</button>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e5eeff;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin: 2rem 0;
+        color: #1f3a68;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 0;
+      }
+
+      input[type="file"] {
+        margin: 1rem 0;
+        padding: 0.5rem;
+        border: 2px solid #1f3a68;
+        border-radius: 0.5rem;
+        background-color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #1f3a68;
+      }
+
+      button[type="submit"] {
+        margin: 1rem 0;
+        padding: 0.5rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: #1f3a68;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #2c5282;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        list-style: none;
+        margin: 2rem 0;
+        padding: 0;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        margin: 1rem;
+        border: 2px solid #1f3a68;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 5px #1f3a68;
+      }
+
+      li {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 0.5rem;
+        color: #1f3a68;
+      }
+      p {
+        border: 2px solid #1f3a68;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        background-color: white;
+        color: #1f3a68;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Your Result Here</h1>
+    <form
+      action="{{ url_for('post_images') }}"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="images" accept="image/*" multiple />
+      <button type="submit">Process Images</button>
     </form>
 
     <ul>
-        {% for item in result %}
-            <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img">
-            <li>{{ item.image_name }} {{item.label}}</li>
-        {% endfor %}
-        </ul>
-</body>
+      {% for item in result %}
+      <li>
+        <img
+          src="data:output_image/png;base64, {{ item.output_image }}"
+          alt="img"
+        />
+        <p>{{ item.image_name }} {{item.label}}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
 </html>
