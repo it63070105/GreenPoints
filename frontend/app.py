@@ -40,17 +40,19 @@ def post_images():
         image = request_images[i].read()
         image_np = np.frombuffer(image, np.uint8)
         image_cv = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
-        image_cv = cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB)
         image_string = encode_image(image_cv)
         payload.get('images').append({'image_name': request_images[i].filename, 'encode_image': image_string})  
 
     response = requests.post(f"{url}/detect-image", json=payload)
     data = json.loads(response.content)
-    print(data)
+    # print(data)
 
     for result in data:
         image_string = result['output_image']
         result['output_image'] = urllib.parse.quote(base64.b64encode(decode_image(image_string).read()).decode())
+        if result['found']:
+            image_string = result['qrcode']
+            result['qrcode'] = urllib.parse.quote(base64.b64encode(decode_image(image_string).read()).decode())
 
     return render_template("index.html", result=data)
 

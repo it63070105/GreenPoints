@@ -47,6 +47,8 @@ async def process_image(image_request: ImageRequest):
     recycle = ['bottle', 'cup', 'paper', 'can']
     images = image_request.images
     result = []
+    found = False
+    qrcode = ''
     
     # create video capture object
     for i in range(0, len(images)):
@@ -63,7 +65,15 @@ async def process_image(image_request: ImageRequest):
         for j in range(0, len(label)):
             if label[j] not in recycle:
                 label[j] = 'trash'
-        result.append({'image_name': images[i].image_name, 'label': label, 'output_image': output_image})
-        print(result)
+            if label[j] in recycle and found != True:
+                found = True
+                with open('./qrcode.jpg', 'rb') as f:
+                    image_data = f.read()
+                    image_np = np.frombuffer(image_data, np.uint8)
+                    image_cv = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
+                    qrcode = encode_image(image_cv)
+        
+        result.append({'image_name': images[i].image_name, 'label': label, 'output_image': output_image, 'found': found, 'qrcode': qrcode})
+        # print(result)
         
     return result

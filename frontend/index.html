@@ -85,6 +85,21 @@
         background-color: white;
         color: #1f3a68;
       }
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+        margin: auto;
+        display: block;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
   </head>
   <body>
@@ -95,9 +110,10 @@
       enctype="multipart/form-data"
     >
     <label for="images">Select an image:</label>
-    <input type="file" id="image-upload" name="images" accept="image/*" onchange="displayImage(event)">
+    <input type="file" id="image-upload" name="images" accept="image/*" onchange="displayImage(event)" required>
       <!-- <input type="file" name="images" accept="image/*" multiple /> -->
       <button type="submit">Process Images</button>
+      <div id="loader" class="loader" style="display:none;"></div>
     </form>
     <img id="selected-image" src="#" alt="Selected Image" style="display:none">
 
@@ -108,7 +124,17 @@
           src="data:output_image/png;base64, {{ item.output_image }}"
           alt="img"
         />
-        <p>{{ item.image_name }} {{item.label}}</p>
+        <p>{{item.label}}</p>
+        <!-- if found == true display image -->
+        {% if item.found %}
+          <p>You recycle. You save the world. Scan to collect point.</p>
+          <img
+            src="data:qrcode/png;base64, {{ item.qrcode }}"
+            alt="QRcode"
+          />
+        {% else %}
+          <p>You so bad.</p>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
@@ -126,6 +152,17 @@
       
       reader.readAsDataURL(selectedFile);
     }
+
+    const form = document.querySelector('form');
+    const loader = document.querySelector('#loader');
+    const processBtn = document.querySelector('#process-btn');
+
+    form.addEventListener('submit', function(event) {
+      // Show the loading animation
+      loader.style.display = 'block';
+      // Disable the "Process Images" button
+      processBtn.disabled = true;
+    });
     </script>
 </html>
 
