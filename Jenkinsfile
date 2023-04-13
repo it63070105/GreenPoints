@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Initial : Delete  containers and images'
                 echo "Current path is ${pwd()}"
-                bat "docker-compose down --rmi -f all --volumes || true"
+                bat "docker-compose down --rmi -f all --volumes"
             }
         }
 
