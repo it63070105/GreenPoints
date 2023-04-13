@@ -5,7 +5,7 @@
 services:
   backend:
     build: ./backend
-    image: it63070105/backend:1.0
+    image: it63070105/green-points-backend:1.0
     healthcheck: 
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 15s
@@ -22,7 +22,7 @@ services:
 
   frontend:
     build: ./frontend
-    image: it63070105/frontend:1.0
+    image: it63070105/green-points-frontend:1.0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 15s
