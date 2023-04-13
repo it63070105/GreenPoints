@@ -23,7 +23,8 @@ pipeline {
         stage('Login Stage') {
           steps {
             echo "Login : Logging in . . ."
-            bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login username $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USR', passwordVariable: 'DOCKERHUB_PSW')]) {
+                    bat 'echo %DOCKERHUB_PSW% | docker login username %DOCKERHUB_USR% --password-stdin'
           }
         }
 
