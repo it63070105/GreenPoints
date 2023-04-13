@@ -1,9 +1,9 @@
-body {
+/* body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
   background-color: #e5eeff;
-}
+} */
 
 h1 {
   text-align: center;
@@ -56,28 +56,19 @@ ul {
   padding: 0;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  margin: 1rem;
-  border: 2px solid #1f3a68;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 5px #1f3a68;
-}
-
 li {
   text-align: center;
   font-size: 1.2rem;
   margin: 0.5rem;
   color: #1f3a68;
 }
-p {
+/* p {
   border: 2px solid #1f3a68;
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: white;
   color: #1f3a68;
-}
+} */
 .loader {
   border: 6px solid rgba(0, 0, 0, 0.1);
   border-top: 6px solid #1f3a68;

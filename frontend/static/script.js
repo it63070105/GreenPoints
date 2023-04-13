@@ -60,7 +60,7 @@ new Vue({
   mounted() {
     const processBtn = document.getElementById("process-btn");
     const loader = document.getElementById("loader");
-
+    
     processBtn.addEventListener("click", () => {
       loader.style.display = "block";
     });

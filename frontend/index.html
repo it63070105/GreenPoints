@@ -3,57 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Processing</title>
+    <title>Green Points</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bulma.min.css')}}"/>
+    
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}"/>
   </head>
   <body>
     <div id="app">
-    <h1>Your Result Here</h1>
-    <form
-      action="{{ url_for('post_images') }}"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <label for="images">Select an image:</label>
-      <input
-  type="file"
-  id="image-upload"
-  name="images"
-  accept="image/*"
-  v-on:change="displayImage($event)"
-  required
-/>
-      <!-- <input type="file" name="images" accept="image/*" multiple /> -->
-      <button type="submit" id="process-btn">Process Images</button>
-<div class="loader" id="loader" style="display: none"></div>
-    </form>
-    <img
-      id="selected-image"
-      src="#"
-      alt="Selected Image"
-      style="display: none"
-    />
+      <div style="display: flex; align-items: center; align-self: center; justify-content: center; " >
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Green Points Logo" height="20%" width="20%">
+      </div>
+      <form
+        action="{{ url_for('post_images') }}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <label for="images">Select an image</label>
+        <input
+          type="file"
+          id="image-upload"
+          name="images"
+          accept="image/*"
+          v-on:change="displayImage($event)"
+          required
+        />
+        <button class="button submit" onclick="document.getElementById('myModal2').classList.add('is-active')">Process Images</button>
+        
+        <div class="modal" id="myModal2">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Checking image</p>
+              <div class="loader" id="loader"></div>
+            </header>
+            <section class="modal-card-body">
+              <div style="display: flex; justify-content: center;">
+                <img
+                  id="selected-image"
+                  src="#"
+                  alt="Selected Image"
+                  style="display: none;"
+                />
+              </div>
+            </section>
+            <footer class="modal-card-foot" style="justify-content: end;">
+            </footer>
+          </div>
+        </div>
+      </form>
 
-    <ul id="output-list">
-      {% for item in result %}
-      <li>
-        <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img" />
-        <p>{{item.label}}</p>
-        <!-- if found == true display image -->
-        {% if item.found %}
-        <p>You recycle. You save the world. Scan to collect point.</p>
-        <img src="data:qrcode/png;base64, {{ item.qrcode }}" alt="QRcode" />
-        {% else %}
-        <p>You so bad.</p>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
+      <ul id="output-list">
+        {% for item in result %}
+        <li>
+          <!-- <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img" data-toggle="modal" data-target="#exampleModalCenter"/> -->
+          {% if item.found %}
+          <div class="modal is-active" id="myModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Thank you for recycling!</p>
+                <button class="delete" aria-label="close" onclick="document.getElementById('myModal').classList.remove('is-active')"></button>
+              </header>
+              <section class="modal-card-body">
+                <p>Scan to collect point</p>
+                <img src="data:qrcode/png;base64, {{ item.qrcode }}" alt="QRcode" style="height: 80%; width: 80%;"/>
+                <p>Found : {{item.label}}</p>
+              </section>
+              <footer class="modal-card-foot" style="justify-content: end;">
+                <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
+              </footer>
+            </div>
+          </div>
+          {% else %}
+          <p>You so bad.</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
   </div>
   </body>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </html>
