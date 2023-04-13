@@ -17,16 +17,13 @@ pipeline {
         stage('Build Stage') {
             steps {
                 echo "Build : Current path is ${pwd()}"
-                bat 'dir'
                 bat "docker-compose build"
             }
         }
         stage('Login Stage') {
           steps {
             echo "Login : Logging in . . ."
-            bat '$DOCKERHUB_CREDENTIALS_PSW'
-            bat '$DOCKERHUB_CREDENTIALS_USR'
-            bat '$DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login username $DOCKERHUB_CREDENTIALS_USR --password-stdin'
           }
         }
 
