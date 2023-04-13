@@ -34,7 +34,6 @@ pipeline {
         stage('Pull Stage') {
             steps {
                 bat "docker-compose pull"
-                bat "ls"
             }
         }
         
