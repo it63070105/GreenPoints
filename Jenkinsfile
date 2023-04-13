@@ -23,16 +23,14 @@ pipeline {
         stage('Login Stage') {
           steps {
             echo "Login : Logging in . . ."
-            bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login username $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login username $DOCKERHUB_CREDENTIALS_USR --password-stdin"
           }
         }
 
         stage('Push Stage') {
             steps {
-                dir('Image_process') { // change directory to Lab_docker_Jenkins
                     echo "Push : Current path is ${pwd()}"
                     bat "docker-compose push"
-                }
             }
         }
         
