@@ -79,7 +79,29 @@
             </div>
           </div>
           {% else %}
-          <p>You so bad.</p>
+          <div class="modal is-active" id="myModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Your Recycling Can't Be Processed</p>
+                <button class="delete" aria-label="close" onclick="document.getElementById('myModal').classList.remove('is-active')"></button>
+              </header>
+              <section class="modal-card-body has-text-centered">
+                <div class="content">
+                  <p class="is-size-5">Sorry, the image you've uploaded is currently not supported for processing Please try a different image.</p>
+                </div>
+                <div class="content">
+                  <figure class="image" style="width: 80%; display: inline-block;">
+                    <img src="static/giphy.gif" alt="Unrecyclable Image Example">
+                  </figure>
+                </div>
+              </section>
+              
+              <footer class="modal-card-foot" style="justify-content: end;">
+                <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
+              </footer>
+            </div>
+          </div>
           {% endif %}
         </li>
         {% endfor %}
