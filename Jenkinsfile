@@ -25,6 +25,7 @@ pipeline {
             echo "Login : Logging in . . ."
             withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USR', passwordVariable: 'DOCKERHUB_PSW')]) {
                     bat 'echo %DOCKERHUB_PSW% | docker login username %DOCKERHUB_USR% --password-stdin'
+            }
           }
         }
 
