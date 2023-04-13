@@ -7,4 +7,5 @@ Pillow
 numpy
 matplotlib
 requests
-io
+Python-IO
+requires.io
