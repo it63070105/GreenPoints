@@ -18,29 +18,29 @@ pipeline {
             steps {
                 echo 'Initial : Delete  containers and images'
                 echo "Current path is ${pwd()}"
-                sh "docker-compose down --rmi all --volumes --remove-orphans"
-                sh "docker network prune"
-                sh "docker volume prune"
+                bat "docker-compose down --rmi all --volumes --remove-orphans"
+                bat "docker network prune"
+                bat "docker volume prune"
             }
         }
         
         stage('Login Stage') {
             steps {
                 echo "Login : Logging in . . ."
-                sh "echo ${params.DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${params.DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                bat "echo ${params.DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${params.DOCKERHUB_CREDENTIALS_USR} --password-stdin"
             }
         }
 
         stage('Pull Stage') {
             steps {
-                sh "docker-compose pull"
-                sh "ls"
+                bat "docker-compose pull"
+                bat "ls"
             }
         }
         
         stage('Run Stage') {
             steps {
-                sh "docker-compose up -d"
+                bat "docker-compose up -d"
             }
         }
     }
