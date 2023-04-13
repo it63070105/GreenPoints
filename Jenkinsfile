@@ -17,6 +17,7 @@ pipeline {
         stage('Build Stage') {
             steps {
                 echo "Build : Current path is ${pwd()}"
+                bat 'dir'
                 bat "docker-compose build"
             }
         }
