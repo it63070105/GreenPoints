@@ -78,20 +78,20 @@ async def process_image(image_request: ImageRequest):
         
     return result
 
-@app.get("/getrecords")
-async def getrecords():
-    conn = psycopg2.connect(
-        host="db",
-        database="greenpointsdb",
-        user="postgres",
-        password="postgres"
-    )
-    cur = conn.cursor()
-    try:
-        query = "SELECT * FROM records"
-        cur.execute(query)
-        records = cur.fetchall()
-        print(records)
-        return records
-    except:
-        return False
+# @app.get("/getrecords")
+# async def getrecords():
+#     conn = psycopg2.connect(
+#         host="db",
+#         database="greenpointsdb",
+#         user="postgres",
+#         password="postgres"
+#     )
+#     cur = conn.cursor()
+#     try:
+#         query = "SELECT * FROM records"
+#         cur.execute(query)
+#         records = cur.fetchall()
+#         print(records)
+#         return records
+#     except:
+#         return False

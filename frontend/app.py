@@ -57,11 +57,11 @@ def post_images():
 
     return render_template("index.html", result=data)
 
-@app.route('/records', methods=['GET'])
-def records():
-    records = requests.get(f"{url}/getrecords")
-    print(json.loads(records.content))
-    return render_template("records.html", records=json.loads(records.content))
+# @app.route('/records', methods=['GET'])
+# def records():
+#     records = requests.get(f"{url}/getrecords")
+#     print(json.loads(records.content))
+#     return render_template("records.html", records=json.loads(records.content))
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="8081")
