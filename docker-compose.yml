@@ -19,8 +19,6 @@ services:
     networks:
       - front-tier
       - back-tier
-    depends_on:
-      - db
 
   frontend:
     build: ./frontend/
@@ -38,8 +36,6 @@ services:
     networks:
       - front-tier
       - back-tier
-    depends_on:
-      - db
   
   db:
     image: postgres:latest
