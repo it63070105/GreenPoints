@@ -9,4 +9,4 @@ opencv-python
 cvlib
 keras
 tensorflow
-psycopg2
+psycopg2-binary
