@@ -9,3 +9,4 @@ cv2
 cvlib
 keras
 tensorflow
+psycopg2

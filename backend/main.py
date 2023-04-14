@@ -1,15 +1,33 @@
 import cv2
 import cvlib as cv
 from cvlib.object_detection import draw_bbox
-import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 import cv2
 import base64
 from typing import List
+import psycopg2
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8080",
+    "http://localhost:8088",
+    "http://localhost:8000",
+    "http://localhost:8081",
+    "http://localhost:5000",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # from keras.models import load_model
 # import numpy as np
@@ -77,3 +95,21 @@ async def process_image(image_request: ImageRequest):
         # print(result)
         
     return result
+
+@app.get("/getrecords")
+async def getrecords():
+    conn = psycopg2.connect(
+        host="localhost",
+        database="greenpointsdb",
+        user="postgres",
+        password="postgres"
+    )
+    cur = conn.cursor()
+    try:
+        query = "SELECT * FROM records"
+        cur.execute(query)
+        records = cur.fetchall()
+        print(records)
+        return records
+    except:
+        return False
