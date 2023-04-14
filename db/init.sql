@@ -1,9 +1,16 @@
+-- switch to a different database
+\c postgres
+
+-- drop the database if it exists
 DROP DATABASE IF EXISTS greenpointsdb;
 
+-- create the database
 CREATE DATABASE greenpointsdb;
 
+-- switch to the new database
 \c greenpointsdb;
 
+-- drop the table if it exists
 DROP TABLE IF EXISTS records;
 
 CREATE TABLE records (
