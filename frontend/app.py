@@ -43,6 +43,7 @@ def post_images():
         image_string = encode_image(image_cv)
         payload.get('images').append({'image_name': request_images[i].filename, 'encode_image': image_string})  
 
+    print("POST: " + url + "/detect-image")
     response = requests.post(f"{url}/detect-image", json=payload)
     data = json.loads(response.content)
     # print(data)

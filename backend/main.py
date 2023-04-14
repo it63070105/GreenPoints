@@ -43,7 +43,7 @@ def decode_image(image_string):
 
 @app.post("/detect-image")
 async def process_image(image_request: ImageRequest):
-    
+    print("RECEIVE: request")
     recycle = ['bottle', 'cup', 'paper', 'can']
     images = image_request.images
     result = []
