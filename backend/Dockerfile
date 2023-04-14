@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 -y
+RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 -y curl
 
 # Download YOLOv4 configuration file
 RUN curl -L -o cfg/yolov4.cfg https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4.cfg
