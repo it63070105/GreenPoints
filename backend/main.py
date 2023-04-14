@@ -99,7 +99,7 @@ async def process_image(image_request: ImageRequest):
 @app.get("/getrecords")
 async def getrecords():
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="greenpointsdb",
         user="postgres",
         password="postgres"
