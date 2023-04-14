@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS greenpointsdb;
+
 CREATE DATABASE greenpointsdb;
 
 \c greenpointsdb;
