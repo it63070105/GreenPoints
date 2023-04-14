@@ -6,35 +6,33 @@ pipeline {
     }
 
     stages {
-        stage('Initialize Stage') {
+        stage('Initialize Stage.') {
             steps {
                 echo 'Initial : Delete  containers and images'
                 echo "Current path is ${pwd()}"
-                bat "docker-compose down --rmi all --volumes || true"
+                bat "docker-compose down --rmi local"
             }
         }
 
         stage('Build Stage') {
             steps {
                 echo "Build : Current path is ${pwd()}"
-                bat 'dir'
                 bat "docker-compose build"
             }
         }
-        
         stage('Login Stage') {
           steps {
             echo "Login : Logging in . . ."
-            bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USR', passwordVariable: 'DOCKERHUB_PSW')]) {
+                    bat 'docker login -u %DOCKERHUB_USR% -p %DOCKERHUB_PSW%'
+            }
           }
         }
 
         stage('Push Stage') {
             steps {
-                dir('Image_process') { // change directory to Lab_docker_Jenkins
                     echo "Push : Current path is ${pwd()}"
                     bat "docker-compose push"
-                }
             }
         }
         

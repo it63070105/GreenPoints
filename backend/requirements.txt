@@ -5,7 +5,7 @@ opencv-python-headless
 Pillow
 numpy
 matplotlib
-cv2
+opencv-python
 cvlib
 keras
 tensorflow

@@ -27,14 +27,13 @@ pipeline {
         stage('Login Stage') {
             steps {
                 echo "Login : Logging in . . ."
-                bat "echo ${params.DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${params.DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                bat "docker login -u ${params.DOCKERHUB_CREDENTIALS_USR} -p ${params.DOCKERHUB_CREDENTIALS_PSW}"
             }
         }
 
         stage('Pull Stage') {
             steps {
                 bat "docker-compose pull"
-                bat "ls"
             }
         }
         
