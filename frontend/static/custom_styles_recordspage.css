@@ -3,10 +3,11 @@ html {
 }
 
 body {
-    /* background-color: #C1C8E4; */
-    font-family: Arial, sans-serif;
-    min-height: 100%;
-    margin: 0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; 
+  min-height: 100%;
 }
 
 .section {
@@ -14,48 +15,125 @@ body {
 }
 
 .label {
-    color: #5680E9;
+    color: #3AAFA9;
 }
 
 .select select {
-    border-color: #84CCEB;
-    color: #5AB9EA;
+    border-color: #2B7A78;
+    color: #17252A;
 }
 
 .select select:focus {
-    box-shadow: 0 0 0 1px #5AB9EA;
+    box-shadow: 0 0 0 1px #2B7A78;
 }
 
 .table {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    position: relative;
 }
 
 .table thead tr {
-    background-color: #5680E9;
+    background-color: #3AAFA9;
     color: white;
+}
+.table th {
+    text-align: center;
+    padding: 10px;
+}
+
+.table td {
+    padding: 10px;
+    position: relative;
+    text-align: center;
+}
+.table td:first-child,
+.table th:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.table td:last-child,
+.table th:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .table tbody tr:hover {
-    background-color: #84CCEB;
-    color: #5680E9;
+    background-color: #B8DFD8;
+    color: #17252A;
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #5AB9EA;
-    color: white;
-}
-
-.table tbody tr:nth-child(even) {
-    background-color: #C1C8E4;
-    color: #8860D0;
-}
-
-.table tbody tr:nth-child(odd):hover {
-    background-color: #84CCEB;
-    color: #5680E9;
-}
-
-.table tbody tr:nth-child(even):hover {
-    background-color: #84CCEB;
-    color: #5680E9;
-}
+    background-color: inherit;
+    color: inherit;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: inherit;
+    color: inherit;
+  }
+  
+  .table tbody tr:nth-child(odd):hover {
+    background-color: inherit;
+    color: inherit;
+  }
+  
+  .table tbody tr:nth-child(even):hover {
+    background-color: inherit;
+    color: inherit;
+  }
+  .table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 6px;
+}  
+  .navbar {
+    padding: 0;
+    background-color: #1D2731;
+    animation: backgroundColorChange 10s infinite;
+  }
+  
+  .navbar-brand .navbar-item img {
+    max-height: 2.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .navbar-item {
+    color: #ECC58C;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 1rem;
+  }
+  
+  .navbar-item:hover {
+    color: #ED6A5A;
+  }
+  
+  .navbar-end {
+    align-items: center;
+  }
+  
+  /* Customize the "Select Image" and "Records" buttons */
+  .navbar-item.button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #ECC58C;
+    color: #1D2731;
+    border-radius: 0.3rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar-item.button:hover {
+    background-color: #ED6A5A;
+    color: #F4F1BB;
+  }
+  
+  
+  
+  
+  
+  

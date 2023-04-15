@@ -4,6 +4,19 @@
   padding: 0;
   background-color: #e5eeff;
 } */
+html{
+  height: 100%;
+}
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; 
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+}
+
 
 h1 {
   text-align: center;
@@ -110,3 +123,52 @@ li {
 #process-btn.loading:after {
   opacity: 1;
 }
+
+.navbar {
+  padding: 0;
+  background-color: #1D2731;
+  animation: backgroundColorChange 10s infinite;
+}
+
+.navbar-brand .navbar-item img {
+  max-height: 2.5rem;
+  padding-right: 0.5rem;
+}
+
+.navbar-item {
+  color: #ECC58C;
+  position: relative;
+  transition: color 0.3s ease;
+  padding: 1rem;
+}
+
+.navbar-item:hover {
+  color: #ED6A5A;
+}
+
+.navbar-end {
+  align-items: center;
+}
+
+/* Customize the "Select Image" and "Records" buttons */
+.navbar-item.button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #ECC58C;
+  color: #1D2731;
+  border-radius: 0.3rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-item.button:hover {
+  background-color: #ED6A5A;
+  color: #F4F1BB;
+}
+
+
+
+
+
+
+
