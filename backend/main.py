@@ -67,7 +67,7 @@ async def process_image(image_request: ImageRequest):
         result.append({'image_name': images[i].image_name, 'label': label, 'output_image': output_image, 'found': found, 'qrcode': qrcode})
         if found:
             conn = psycopg2.connect(
-                host="localhost",
+                host="db",
                 database="greenpointsdb",
                 user="postgres",
                 password="postgres"
@@ -94,7 +94,7 @@ async def process_image(image_request: ImageRequest):
 @app.get("/getrecords")
 async def getrecords(object_filter: Optional[str] = None):
     conn = psycopg2.connect(
-        host="localhost",
+        host="db",
         database="greenpointsdb",
         user="postgres",
         password="postgres"
