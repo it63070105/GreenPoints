@@ -11,10 +11,14 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo_no_text.png') }}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="app">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
+      <nav class="navbar" role="navigation" aria-label="main navigation" style="position: sticky; top: 0; font-family: 'DynaPuff', cursive;">
         <div class="navbar-brand">
             <a class="navbar-item" href="http://localhost:8081">
                 <img src="{{ url_for('static', filename='logo_no_text.png') }}" alt="Green Points Logo" height="100%" width="100%">
@@ -22,25 +26,17 @@
             <a class="navbar-item" href="http://localhost:8081">
                 <p>Green Points</p>
             </a>
-            
         </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-                <a class="navbar-item" href="http://localhost:8081">
-                    Select Image
-                  </a>
-            
-                  <a class="navbar-item" href="http://localhost:8081/records">  
-                    Records
-                  </a>
-            </div>
-          </div>
+        <div class="navbar-brand" style="display: flex; margin-left: auto;"> 
+          <a class="navbar-item" href="http://localhost:8081">
+            Select Image
+          </a>
+          <a class="navbar-item" href="http://localhost:8081/records">
+            Records
+          </a>
         </div>
       </nav>
-      <div style="display: flex; align-items: center; justify-content: center; padding-top: 50px;">
+      <div style="display: flex; align-items: center; justify-content: center;">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Green Points Logo" height="20%" width="20%" style="margin-bottom: 20px;">
       </div>
       
@@ -49,6 +45,7 @@
         action="{{ url_for('post_images') }}"
         method="POST"
         enctype="multipart/form-data"
+        style="font-family: 'DynaPuff', cursive;"
       >
         <label for="images">Select an image</label>
         <input
@@ -57,9 +54,10 @@
           name="images"
           accept="image/*"
           v-on:change="displayImage($event)"
+          style="font-family: 'DynaPuff', cursive;"
           required
         />
-        <button class="button submit" onclick="showModal()">Process Images</button>
+        <button class="button submit is-success" style="font-family: 'DynaPuff', cursive;" @click="showModal">Process Images</button>
         
         <div class="modal" id="myModal2">
           <div class="modal-background"></div>
@@ -95,7 +93,7 @@
                 <button class="delete" aria-label="close" @click="closeModal"></button>
               </header>
               <section class="modal-card-body">
-                <p>Scan to collect point</p>
+                <p>Scan to collect point</p><br>
                 <img src="data:qrcode/png;base64, {{ item.qrcode }}" alt="QRcode" style="height: 80%; width: 80%;"/>
                 <p>Found : {{item.label}}</p>
               </section>
@@ -110,12 +108,12 @@
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
-                <p class="modal-card-title">Your Recycling Can't Be Processed</p>
+                <p class="modal-card-title">Your recycling can't be processed</p>
                 <button class="delete" aria-label="close" @click="closeModal"></button>
               </header>
               <section class="modal-card-body has-text-centered">
                 <div class="content">
-                  <p class="is-size-5">Sorry, the image you've uploaded is currently not supported for processing Please try a different image.</p>
+                  <p class="is-size-5">Sorry, the image you've uploaded is currently not supported for processing please try a different image.</p>
                 </div>
                 <div class="content">
                   <figure class="image" style="width: 80%; display: inline-block;">
@@ -137,14 +135,4 @@
   </div>
   </body>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
-  <script>
-    function showModal() {
-      var fileInput = document.getElementById("image-upload");
-      var selectedImage = document.getElementById("selected-image");
-      if (fileInput.files.length > 0) {
-        selectedImage.src = URL.createObjectURL(fileInput.files[0]);
-        document.getElementById("myModal2").classList.add('is-active');
-      }
-    }
-  </script>
 </html>

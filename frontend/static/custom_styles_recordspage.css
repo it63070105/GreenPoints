@@ -10,10 +10,6 @@ body {
   min-height: 100%;
 }
 
-.section {
-    min-height: 100vh;
-}
-
 .label {
     color: #3AAFA9;
 }

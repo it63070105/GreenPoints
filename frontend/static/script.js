@@ -62,6 +62,14 @@ new Vue({
       clearInterval(this.timerId);
       document.getElementById('myModal').classList.remove('is-active');
     },
+    showModal() {
+      console.log('OK')
+      var fileInput = document.getElementById("image-upload");
+      if (fileInput.files.length > 0) {
+        console.log("OK2")
+        document.getElementById("myModal2").classList.add('is-active');
+      }
+    },
   },
   mounted() {
 

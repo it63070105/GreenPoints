@@ -104,10 +104,10 @@ async def getrecords(object_filter: Optional[str] = None):
     cur = conn.cursor()
     try:
         if object_filter:
-            query = "SELECT * FROM records WHERE objects LIKE %s;"
+            query = "SELECT * FROM records WHERE objects LIKE %s ORDER BY time DESC;"
             cur.execute(query, ('%' + object_filter + '%',))
         else:
-            query = "SELECT * FROM records;"
+            query = "SELECT * FROM records ORDER BY time DESC;"
             cur.execute(query)
             
         records = cur.fetchall()
@@ -115,3 +115,6 @@ async def getrecords(object_filter: Optional[str] = None):
     except Exception as e:
         print(e)
         return False
+    finally:
+        cur.close()
+        conn.close()

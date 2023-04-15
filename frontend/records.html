@@ -11,9 +11,13 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo_no_text.png') }}"/>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_styles_recordspage.css')}}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="position: sticky; top: 0; font-family: 'DynaPuff', cursive;">
         <div class="navbar-brand">
             <a class="navbar-item" href="http://localhost:8081">
                 <img src="{{ url_for('static', filename='logo_no_text.png') }}" alt="Green Points Logo" height="100%" width="100%">
@@ -22,22 +26,15 @@
                 <p>Green Points</p>
             </a>
         </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-                <a class="navbar-item" href="http://localhost:8081">
-                    Select Image
-                  </a>
-            
-                  <a class="navbar-item" href="http://localhost:8081/records">
-                    Records
-                  </a>
-            </div>
-          </div>
+        <div class="navbar-brand" style="display: flex; margin-left: auto;"> 
+          <a class="navbar-item" href="http://localhost:8081">
+            Select Image
+          </a>
+          <a class="navbar-item" href="http://localhost:8081/records">
+            Records
+          </a>
         </div>
-      </nav>
+    </nav>
     <section class="section">
         <div class="container">
             <div class="columns">
@@ -51,6 +48,7 @@
                                     <option value="can">Can</option>
                                     <option value="bottle">Bottle</option>
                                     <option value="cup">Cup</option>
+                                    <option value="paper">Paper</option>
                                 </select>
                             </div>
                         </div>
@@ -68,7 +66,7 @@
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <!-- <th>ID</th> -->
                                 <th>Objects</th>
                                 <th>Time</th>
                             </tr>
@@ -76,7 +74,7 @@
                         <tbody>
                             {% for record in records %}
                             <tr>
-                                <td>{{ record[0] }}</td>
+                                <!-- <td>{{ record[0] }}</td> -->
                                 <td>{% for item in record[1].items() %}
                                     {{ item[0] }} x {{ item[1] }}<br>
                                     {% endfor %}
@@ -101,11 +99,12 @@
     <script>
         document.getElementById("object").addEventListener("change", function () {
             const filter = this.value.toLowerCase();
+            console.log(filter)
             const table = document.querySelector("table");
             const rows = table.querySelectorAll("tbody tr");
 
             rows.forEach(row => {
-                const cell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                const cell = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
                 if (filter === "" || cell.includes(filter)) {
                     row.style.display = "";
                 } else {
