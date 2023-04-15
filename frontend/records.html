@@ -7,25 +7,110 @@
     <title>Records</title>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bulma.min.css')}}"/>
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo_no_text.png') }}"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_styles_recordspage.css')}}"/>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Objects</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in records %}
-            <tr>
-                <td>{{ record[0] }}</td>
-                <td>{{ record[1] }}</td>
-                <td>{{ record[2] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="http://localhost:8081">
+                <img src="{{ url_for('static', filename='logo_no_text.png') }}" alt="Green Points Logo" height="100%" width="100%">
+            </a>
+            <a class="navbar-item" href="http://localhost:8081">
+                <p>Green Points</p>
+            </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+                <a class="navbar-item" href="http://localhost:8081">
+                    Select Image
+                  </a>
+            
+                  <a class="navbar-item" href="http://localhost:8081/records">
+                    Records
+                  </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4">
+                    <div class="field">
+                        <label class="label" for="object">Select Object:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="object" id="object">
+                                    <option value="">All</option>
+                                    <option value="can">Can</option>
+                                    <option value="bottle">Bottle</option>
+                                    <option value="cup">Cup</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if records %}
+                {% if not data %}
+                    <div class="notification is-info">
+                        <button class="delete" href="http://localhost:8081"></button>
+                        <strong>No data.</strong>
+                    </div>
+                {% else %}
+                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Objects</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td>{{ record[0] }}</td>
+                                <td>{% for item in record[1].items() %}
+                                    {{ item[0] }} x {{ item[1] }}<br>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ record[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% else %}
+                <div class="notification is-danger">
+                    <button class="delete" href="http://localhost:8081"></button>
+                    <strong>Something when wrong</strong><br>
+                    Please try again later.
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("object").addEventListener("change", function () {
+            const filter = this.value.toLowerCase();
+            const table = document.querySelector("table");
+            const rows = table.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                const cell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                if (filter === "" || cell.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 </html>

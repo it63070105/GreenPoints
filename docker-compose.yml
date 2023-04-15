@@ -19,12 +19,14 @@ services:
     networks:
       - front-tier
       - back-tier
+    depends_on:
+    - db
 
   frontend:
     build: ./frontend/
     image: it63070105/green-points-frontend:1.0
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
       interval: 15s
       timeout: 5s
       retries: 3
@@ -36,6 +38,8 @@ services:
     networks:
       - front-tier
       - back-tier
+    depends_on:
+    - db
 
   db:
     image: postgres:latest
@@ -43,7 +47,11 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: greenpointsdb
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - "./db/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./healthchecks:/healthchecks"
+    healthcheck:
+      test: /healthchecks/postgres.sh
+      interval: "5s"
     networks:
       - back-tier
 

@@ -8,20 +8,11 @@ import cv2
 import base64
 from typing import List
 import psycopg2
+import datetime
+from typing import Optional
 
 app = FastAPI()
 
-# from keras.models import load_model
-# import numpy as np
-#tensorflow
-
-# Load the trained model
-# model = load_model('./trained_model.h5')
-
-# Create a dictionary of class labels
-# labels = ['Plastic', 'Glass', 'Metal', 'Trash', 'Paper', 'Cardboard']
-
-# images = ['./backend/images/1.jpg', './backend/images/2.jpg', './backend/images/3.jpg', './backend/images/4.jfif', './backend/images/5.jfif', './backend/images/6.jpg']
 class ImageInfo(BaseModel):
     image_name : str
     encode_image : str
@@ -74,24 +65,53 @@ async def process_image(image_request: ImageRequest):
                     qrcode = encode_image(image_cv)
         
         result.append({'image_name': images[i].image_name, 'label': label, 'output_image': output_image, 'found': found, 'qrcode': qrcode})
+        if found:
+            conn = psycopg2.connect(
+                host="localhost",
+                database="greenpointsdb",
+                user="postgres",
+                password="postgres"
+            )
+            cur = conn.cursor()
+            try:
+                objects_str = ', '.join(label)
+                now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                query = "INSERT INTO records (objects, time) VALUES ('" + objects_str + "', '" + now_str + "');"
+                cur.execute(query)
+                conn.commit()
+            except psycopg2.Error as e:
+                print(e)
+                conn.rollback()
+                return False
+            finally:
+                cur.close()
+                conn.close()
+
         # print(result)
         
     return result
 
 @app.get("/getrecords")
-async def getrecords():
+async def getrecords(object_filter: Optional[str] = None):
     conn = psycopg2.connect(
-        host="db",
+        host="localhost",
         database="greenpointsdb",
         user="postgres",
         password="postgres"
     )
     cur = conn.cursor()
     try:
-        query = "SELECT * FROM records"
-        cur.execute(query)
+        if object_filter:
+            query = "SELECT * FROM records WHERE objects LIKE %s;"
+            cur.execute(query, ('%' + object_filter + '%',))
+        else:
+            query = "SELECT * FROM records;"
+            cur.execute(query)
         records = cur.fetchall()
-        print(records)
         return records
-    except:
+    except Exception as e:
+        print(e)
         return False
+    finally:
+        cur.close()
+        conn.close()

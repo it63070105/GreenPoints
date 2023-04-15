@@ -1,0 +1,61 @@
+html {
+    height: 100%;
+}
+
+body {
+    /* background-color: #C1C8E4; */
+    font-family: Arial, sans-serif;
+    min-height: 100%;
+    margin: 0;
+}
+
+.section {
+    min-height: 100vh;
+}
+
+.label {
+    color: #5680E9;
+}
+
+.select select {
+    border-color: #84CCEB;
+    color: #5AB9EA;
+}
+
+.select select:focus {
+    box-shadow: 0 0 0 1px #5AB9EA;
+}
+
+.table {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.table thead tr {
+    background-color: #5680E9;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #84CCEB;
+    color: #5680E9;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #5AB9EA;
+    color: white;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #C1C8E4;
+    color: #8860D0;
+}
+
+.table tbody tr:nth-child(odd):hover {
+    background-color: #84CCEB;
+    color: #5680E9;
+}
+
+.table tbody tr:nth-child(even):hover {
+    background-color: #84CCEB;
+    color: #5680E9;
+}

@@ -10,10 +10,35 @@
     
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo_no_text.png') }}"/>
   </head>
   <body>
     <div id="app">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="http://localhost:8081">
+                <img src="{{ url_for('static', filename='logo_no_text.png') }}" alt="Green Points Logo" height="100%" width="100%">
+            </a>
+            <a class="navbar-item" href="http://localhost:8081">
+                <p>Green Points</p>
+            </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+                <a class="navbar-item" href="http://localhost:8081">
+                    Select Image
+                  </a>
+            
+                  <a class="navbar-item" href="http://localhost:8081/records">
+                    Records
+                  </a>
+            </div>
+          </div>
+        </div>
+      </nav>
       <div style="display: flex; align-items: center; align-self: center; justify-content: center; " >
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Green Points Logo" height="20%" width="20%">
       </div>
