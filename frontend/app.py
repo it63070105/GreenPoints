@@ -22,7 +22,7 @@ def decode_image(image_string):
     decoded_data = base64.b64decode(encoded_data)
     return io.BytesIO(decoded_data)
 
-url = "http://backend:8088"
+url = "http://localhost:8088"
 
 @app.route('/', methods=['GET'])
 def home():
@@ -54,14 +54,23 @@ def post_images():
         if result['found']:
             image_string = result['qrcode']
             result['qrcode'] = urllib.parse.quote(base64.b64encode(decode_image(image_string).read()).decode())
+            # Count the occurrences of each item in the label list and exclude 'trash'
+            count_items = {item: result['label'].count(item) for item in set(result['label']) if item != 'trash'}
+
+            # Format the output to display as "itemxN"
+            result['label'] = [f"{item}x{count}" for item, count in count_items.items()]
 
     return render_template("index.html", result=data)
 
-@app.route('/records', methods=['GET'])
+@app.route('/records', methods=['GET', 'POST'])
 def records():
-    records = requests.get(f"{url}/getrecords")
-    print(json.loads(records.content))
+    object_filter = None
+    if request.method == 'POST':
+        object_filter = request.form.get('object')
+    
+    records = requests.get(f"{url}/getrecords", json={"object_filter": object_filter})
     return render_template("records.html", records=json.loads(records.content))
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="8081")

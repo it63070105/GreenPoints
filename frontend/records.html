@@ -7,25 +7,68 @@
     <title>Records</title>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bulma.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom_styles_recordspage.css')}}"/>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Objects</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in records %}
-            <tr>
-                <td>{{ record[0] }}</td>
-                <td>{{ record[1] }}</td>
-                <td>{{ record[2] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4">
+                    <div class="field">
+                        <label class="label" for="object">Select Object:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="object" id="object">
+                                    <option value="">All</option>
+                                    <option value="can">Can</option>
+                                    <option value="bottle">Bottle</option>
+                                    <option value="cup">Cup</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Objects</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record[0] }}</td>
+                        <td>{{ record[1] }}</td>
+                        <td>{{ record[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("object").addEventListener("change", function () {
+            const filter = this.value.toLowerCase();
+            const table = document.querySelector("table");
+            const rows = table.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                const cell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                if (filter === "" || cell.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
