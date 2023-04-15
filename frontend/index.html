@@ -86,7 +86,7 @@
         <li>
           <!-- <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img" data-toggle="modal" data-target="#exampleModalCenter"/> -->
           {% if item.found %}
-          <div class="modal is-active" id="myModal">
+          <div class="modal is-active" id="myModal" onload="modalCountdown(30)">
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
@@ -123,6 +123,7 @@
               </section>
               
               <footer class="modal-card-foot" style="justify-content: end;">
+                <p>Remaining time: <span id="countdown"></span> seconds</p>
                 <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
               </footer>
             </div>
@@ -134,4 +135,18 @@
   </div>
   </body>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    function modalCountdown(seconds) {
+      var countdown = document.getElementById("countdown");
+      countdown.innerHTML = seconds;
+      var timer = setInterval(function() {
+        seconds--;
+        countdown.innerHTML = seconds;
+        if (seconds == 0) {
+          clearInterval(timer);
+          document.getElementById('myModal').classList.remove('is-active');
+        }
+      }, 1000);
+    }
+  </script>
 </html>
