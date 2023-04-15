@@ -23,7 +23,7 @@ def decode_image(image_string):
     decoded_data = base64.b64decode(encoded_data)
     return io.BytesIO(decoded_data)
 
-url = "http://backend:8088"
+url = "http://localhost:8088"
 
 @app.route('/', methods=['GET'])
 def home():

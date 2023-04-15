@@ -43,6 +43,7 @@
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Green Points Logo" height="20%" width="20%">
       </div>
       <form
+        id="image-form"
         action="{{ url_for('post_images') }}"
         method="POST"
         enctype="multipart/form-data"
@@ -56,7 +57,7 @@
           v-on:change="displayImage($event)"
           required
         />
-        <button class="button submit" onclick="document.getElementById('myModal2').classList.add('is-active')">Process Images</button>
+        <button class="button submit" onclick="showModal()">Process Images</button>
         
         <div class="modal" id="myModal2">
           <div class="modal-background"></div>
@@ -75,8 +76,6 @@
                 />
               </div>
             </section>
-            <footer class="modal-card-foot" style="justify-content: end;">
-            </footer>
           </div>
         </div>
       </form>
@@ -86,12 +85,12 @@
         <li>
           <!-- <img src="data:output_image/png;base64, {{ item.output_image }}" alt="img" data-toggle="modal" data-target="#exampleModalCenter"/> -->
           {% if item.found %}
-          <div class="modal is-active" id="myModal" onload="modalCountdown(30)">
+          <div class="modal is-active" id="myModal" @keydown.esc="closeModal" @mousedown.self="closeModal">
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
                 <p class="modal-card-title">Thank you for recycling!</p>
-                <button class="delete" aria-label="close" onclick="document.getElementById('myModal').classList.remove('is-active')"></button>
+                <button class="delete" aria-label="close" @click="closeModal"></button>
               </header>
               <section class="modal-card-body">
                 <p>Scan to collect point</p>
@@ -99,18 +98,18 @@
                 <p>Found : {{item.label}}</p>
               </section>
               <footer class="modal-card-foot" style="justify-content: end;">
-                <p>Remaining time: <span id="countdown"></span> seconds</p>
-                <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
+                <p style="margin-right: 5px;">Remaining time: <span id="timeout"></span> seconds</p>
+                <button class="button" @click="closeModal">Close</button>
               </footer>
             </div>
           </div>
           {% else %}
-          <div class="modal is-active" id="myModal" onload="modalCountdown(30)">
+          <div class="modal is-active" id="myModal" @keydown.esc="closeModal" @mousedown.self="closeModal">
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
                 <p class="modal-card-title">Your Recycling Can't Be Processed</p>
-                <button class="delete" aria-label="close" onclick="document.getElementById('myModal').classList.remove('is-active')"></button>
+                <button class="delete" aria-label="close" @click="closeModal"></button>
               </header>
               <section class="modal-card-body has-text-centered">
                 <div class="content">
@@ -124,8 +123,8 @@
               </section>
               
               <footer class="modal-card-foot" style="justify-content: end;">
-                <p>Remaining time: <span id="countdown"></span> seconds</p>
-                <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
+                <p>Remaining time: <span id="timeout"></span> seconds</p>
+                <button class="button" @click="closeModal">Close</button>
               </footer>
             </div>
           </div>
@@ -137,17 +136,13 @@
   </body>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <script>
-    function modalCountdown(seconds) {
-      var countdown = document.getElementById("countdown");
-      countdown.innerHTML = seconds;
-      var timer = setInterval(function() {
-        seconds--;
-        countdown.innerHTML = seconds;
-        if (seconds == 0) {
-          clearInterval(timer);
-          document.getElementById('myModal').classList.remove('is-active');
-        }
-      }, 1000);
+    function showModal() {
+      var fileInput = document.getElementById("image-upload");
+      var selectedImage = document.getElementById("selected-image");
+      if (fileInput.files.length > 0) {
+        selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+        document.getElementById("myModal2").classList.add('is-active');
+      }
     }
   </script>
 </html>

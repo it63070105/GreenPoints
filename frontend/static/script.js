@@ -6,6 +6,8 @@ new Vue({
     processBtnDisabled: false,
     processBtnText: "Process Images",
     result: [],
+    remainingTime: 30,
+    timerId: null,
   },
   methods: {
     clearOutputList() {
@@ -56,14 +58,25 @@ new Vue({
       this.processBtnDisabled = false;
       this.processBtnText = "Process Images";
     },
+    closeModal() {
+      clearInterval(this.timerId);
+      document.getElementById('myModal').classList.remove('is-active');
+    },
   },
   mounted() {
-    const processBtn = document.getElementById("process-btn");
-    const loader = document.getElementById("loader");
-    
-    processBtn.addEventListener("click", () => {
-      loader.style.display = "block";
-    });
+
+    this.timerId = setInterval(() => {
+      document.getElementById('timeout').innerHTML = this.remainingTime;
+      if (this.remainingTime <= 0) {
+        clearInterval(this.timerId);
+        this.closeModal();
+      } else {
+        this.remainingTime--;
+      }
+    }, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timerId);
   },
 });
 
