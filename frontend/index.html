@@ -99,12 +99,13 @@
                 <p>Found : {{item.label}}</p>
               </section>
               <footer class="modal-card-foot" style="justify-content: end;">
+                <p>Remaining time: <span id="countdown"></span> seconds</p>
                 <button class="button" onclick="document.getElementById('myModal').classList.remove('is-active')">Close</button>
               </footer>
             </div>
           </div>
           {% else %}
-          <div class="modal is-active" id="myModal">
+          <div class="modal is-active" id="myModal" onload="modalCountdown(30)">
             <div class="modal-background"></div>
             <div class="modal-card">
               <header class="modal-card-head">
