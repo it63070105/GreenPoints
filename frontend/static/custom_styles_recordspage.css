@@ -3,7 +3,6 @@ html {
 }
 
 body {
-    background-color: #C1C8E4;
     font-family: Arial, sans-serif;
     min-height: 100%;
     margin: 0;
@@ -48,6 +47,16 @@ body {
 .table tbody tr:nth-child(even) {
     background-color: #C1C8E4;
     color: #8860D0;
+}
+
+.table tbody tr:nth-child(odd):hover {
+    background-color: #84CCEB;
+    color: #5680E9;
+}
+
+.table tbody tr:nth-child(even):hover {
+    background-color: #84CCEB;
+    color: #5680E9;
 }
 
 
