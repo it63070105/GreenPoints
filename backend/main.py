@@ -13,7 +13,7 @@ from typing import Optional
 
 app = FastAPI()
 
-db_host = "localhost"
+db_host = "db"
 
 class ImageInfo(BaseModel):
     image_name : str
