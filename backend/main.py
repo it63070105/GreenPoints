@@ -8,6 +8,8 @@ import cv2
 import base64
 from typing import List
 import psycopg2
+from typing import Optional
+
 
 app = FastAPI()
 
@@ -79,19 +81,24 @@ async def process_image(image_request: ImageRequest):
     return result
 
 @app.get("/getrecords")
-async def getrecords():
+async def getrecords(object_filter: Optional[str] = None):
     conn = psycopg2.connect(
-        host="db",
+        host="localhost",
         database="greenpointsdb",
         user="postgres",
         password="postgres"
     )
     cur = conn.cursor()
     try:
-        query = "SELECT * FROM records"
-        cur.execute(query)
+        if object_filter:
+            query = "SELECT * FROM records WHERE objects LIKE %s;"
+            cur.execute(query, ('%' + object_filter + '%',))
+        else:
+            query = "SELECT * FROM records;"
+            cur.execute(query)
+            
         records = cur.fetchall()
-        print(records)
         return records
     except:
         return False
+
