@@ -37,6 +37,16 @@ pipeline {
             }
         }
         
+        stage('Install library'){
+            steps {
+                dir('backend'){
+                    bat "curl -L -o yolov4.cfg https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4.cfg"
+                    bat "curl -L -o weights/yolov4.weights https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights"
+                    bat "curl -L -o classes/yolov3_classes.txt https://github.com/arunponnusamy/object-detection-opencv/raw/master/yolov3.txt"
+                }
+            }
+        }
+        
         stage('Run Stage') {
             steps {
                 bat "docker-compose up"
