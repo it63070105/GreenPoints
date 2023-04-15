@@ -5,16 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-RUN apt-get update && \
-    apt-get install -y \
-        curl \
-        gcc \
-        libgl1-mesa-glx \
-        libsm6 \
-        libxext6 \
-        libxrender-dev \
-        python3-dev \
-        ffmpeg
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 curl -y
 
 RUN mkdir -p /root/.cvlib/object_detection/yolo/yolov3
 
