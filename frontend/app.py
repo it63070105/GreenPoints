@@ -65,6 +65,7 @@ def post_images():
 
 @app.route('/records', methods=['GET', 'POST'])
 def records():
+<<<<<<< HEAD
     # records = requests.get(f"{url}/getrecords")
     # records = json.loads(records.content)
     # for rec in records:
@@ -102,6 +103,15 @@ def records():
                     counts[obj] = 1
         rec[1] = counts
     return render_template("records.html", records=records, data=True)
+=======
+    object_filter = None
+    if request.method == 'POST':
+        object_filter = request.form.get('object')
+    
+    records = requests.get(f"{url}/getrecords", json={"object_filter": object_filter})
+    return render_template("records.html", records=json.loads(records.content))
+>>>>>>> e5cd5966026ff0ce1598ab83b51fdcbfc604abe2
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="8081")

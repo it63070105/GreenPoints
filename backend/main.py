@@ -107,11 +107,9 @@ async def getrecords(object_filter: Optional[str] = None):
         else:
             query = "SELECT * FROM records;"
             cur.execute(query)
+            
         records = cur.fetchall()
         return records
     except Exception as e:
         print(e)
         return False
-    finally:
-        cur.close()
-        conn.close()
